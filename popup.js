@@ -202,8 +202,9 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('close').addEventListener("click", function(){
         document.getElementById('settings-menu').style.display = "none";
     });
-
-    pai.addEventListener("change", function(){
+    
+    document.getElementById('save').addEventListener("click", function(){
         chrome.storage.sync.set({"pai": pai.checked})
-    })
+        chrome.tabs.reload()
+    });
 });
