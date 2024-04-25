@@ -21,6 +21,17 @@ function applyModifications() {
                 let average = elem[1];
                 let grade = elem[2];
                 let gradeVal = grade.children[0].innerHTML.trim()
+
+                for(let x = 0; x < elem.length; x++){
+                    elem[x].style.border = "1.5px solid black";
+                }
+
+                course.children[0].style.fontWeight = 'bold';
+                average.children[0].style.fontWeight = 'bold';
+                grade.children[0].style.fontWeight = 'bold';
+                course.children[0].style.color = 'black';
+                average.children[0].style.color = 'black';
+                grade.children[0].style.color = 'black';
         
                 if(gradeVal == 'A+' || gradeVal == 'A'){
                     course.style.backgroundColor = '#9bff94';
@@ -31,13 +42,17 @@ function applyModifications() {
                     average.style.backgroundColor = 'yellow';
                     grade.style.backgroundColor = 'yellow';
                 } else if(gradeVal == '') {
-                    course.style.backgroundColor = 'lightgrey';
-                    average.style.backgroundColor = 'lightgrey';
-                    grade.style.backgroundColor = 'lightgrey';
+                    course.style.backgroundColor = '#f1f1f1';
+                    average.style.backgroundColor = '#f1f1f1';
+                    grade.style.backgroundColor = '#f1f1f1';
                 } else {
                     course.style.backgroundColor = '#fc5d44';
                     average.style.backgroundColor = '#fc5d44';
                     grade.style.backgroundColor = '#fc5d44';
+
+                    course.children[0].style.color = 'white';
+                    average.children[0].style.color = 'white';
+                    grade.children[0].style.color = 'white';
                 }
             }
 
