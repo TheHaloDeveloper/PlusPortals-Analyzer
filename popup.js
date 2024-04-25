@@ -127,8 +127,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                             final_gpa = calculate_gpa(true);
                                             weighted.checked = true;
                                         } else {
-                                            final_gpa = calculate_gpa(false);
-                                            weighted.checked = false;
+                                            final_gpa = calculate_gpa(result.isWeighted);
+                                            weighted.checked = result.isWeighted;
                                         }
                                         
                                         tablebody.innerHTML += `<tr><td class='final' colspan="2"><b>Final GPA:<b></td><td class='final' id='final_gpa'><b>${final_gpa}<b></td></tr>`;
@@ -174,7 +174,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function redirectToChangelog(){
-        // chrome.tabs.create({url: 'https://plusportals-analyzer.glitch.me/changelog.html'});
         chrome.tabs.create({ url: 'changelog.html' });
     }
 
@@ -183,6 +182,18 @@ document.addEventListener('DOMContentLoaded', function() {
         let gpa = calculate_gpa(weighted.checked);
         document.getElementById('final_gpa').innerHTML = `<b>${gpa}</b>`
     }
+
+    let pcc = document.getElementById("pcc-checkbox");
+    let ecc = document.getElementById("ecc-checkbox");
+    let pai = document.getElementById("pai-checkbox");
+
+    chrome.storage.sync.get(['pai'], function (result) {
+        if(result.pai == undefined){
+            pai.checked = true;
+        } else {
+            pai.checked = result.pai;
+        }
+    });
     
     document.getElementById("changelog").addEventListener("click", redirectToChangelog);
     weighted.addEventListener("change", toggleWeighted)
@@ -191,4 +202,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('close').addEventListener("click", function(){
         document.getElementById('settings-menu').style.display = "none";
     });
+
+    pai.addEventListener("change", function(){
+        chrome.storage.sync.set({"pai": pai.checked})
+    })
 });

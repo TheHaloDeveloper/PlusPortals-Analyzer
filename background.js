@@ -45,7 +45,18 @@ function applyModifications() {
             let name_container = document.getElementsByClassName('re-blue-strip')[0].getElementsByTagName('label')[0];
 
             let name = name_container.innerHTML.split('<')[0]
-            name_container.innerHTML = `${name} <img src="https://i.ibb.co/fFKTm9T/icon.png" width="20px" style="margin-top: -5px; border-radius: 5px;">`
+            name_container.innerHTML = `${name} `;
+            
+            chrome.storage.sync.get(['pai'], function (result) {
+                if(result.pai == undefined){
+                    chrome.storage.sync.set({"pai": true})
+                    name_container.innerHTML += '<img src="https://i.ibb.co/fFKTm9T/icon.png" width="20px" style="margin-top: -5px; border-radius: 5px;">'
+                } else {
+                    if(result.pai == true){
+                        name_container.innerHTML += '<img src="https://i.ibb.co/fFKTm9T/icon.png" width="20px" style="margin-top: -5px; border-radius: 5px;">'
+                    }
+                }
+            });
         }
     }
     checkFlag();
