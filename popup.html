@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PlusPortals Analyzer</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+        <link rel="stylesheet" href="popup.css">
+
+    </head>
+    <body>
+        <div id="settings-menu">
+            <h1 class="rainbow_text_animated">Settings</h1>
+            <i id="close" class="fa-solid fa-circle-xmark"></i>
+
+            <span>PlusPortals color coding</span> <input type="checkbox" class="toggle" checked>
+            <br>
+            <span>PlusPortals Analyzer icon</span> <input type="checkbox" class="toggle" checked>
+        </div>
+
+        <h1 class="rainbow_text_animated">PlusPortals Analyzer</h1>
+        <div id="btns-container">
+            <i id="settings" class="fa-solid fa-gear"></i>
+            <i id="ungraded-classes" class="fa-solid fa-eye"></i>
+        </div>
+        <h3>By: Anay Mittal</h3>
+
+        <div id="error-container">
+            <p id="error-txt">Please go to &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspPlusPortals!</p>
+        </div>
+
+        <div id="version">v1.2</div>
+
+        <marquee id="desc">Email plusportals.analyzer@gmail.com for suggestions/problems.</marquee>
+
+        <div id="credits">
+            <img src="meltdown.png" width="40px">
+        </div>
+
+        <table class="GeneratedTable">
+            <thead id="table-head"></thead>
+            <tbody id="table-body"></tbody>
+        </table>
+
+        <button id="changelog">Changelog</button>
+        
+        <span id="weighted_txt">Weighted? </span><input type="checkbox" id="weighted" name="weighted" value="weighted" checked>
+    </body>
+    <script src="popup.js"></script>
+</html>
