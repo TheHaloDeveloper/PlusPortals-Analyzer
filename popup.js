@@ -184,8 +184,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     let pcc = document.getElementById("pcc-checkbox");
-    let ecc = document.getElementById("ecc-checkbox");
     let pai = document.getElementById("pai-checkbox");
+
+    chrome.storage.sync.get(['pcc'], function (result) {
+        if(result.pcc == undefined){
+            pcc.checked = true;
+        } else {
+            pcc.checked = result.pcc;
+        }
+    });
 
     chrome.storage.sync.get(['pai'], function (result) {
         if(result.pai == undefined){
@@ -205,6 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     document.getElementById('save').addEventListener("click", function(){
         chrome.storage.sync.set({"pai": pai.checked})
+        chrome.storage.sync.set({"pcc": pcc.checked})
         chrome.tabs.reload()
     });
 });
