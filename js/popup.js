@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        return Math.round((final_gpa / classes) * 100) / 100;
+        return (Math.round((final_gpa / classes) * 100) / 100).toFixed(1);
     }
 
     function main() {
