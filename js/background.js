@@ -35,34 +35,25 @@ function applyModifications() {
                     for(let x = 0; x < elem.length; x++){
                         elem[x].style.border = "1.5px solid black";
                     }
+
+                    function style(elems, types) {
+                        for (let elem of elems) {
+                            for (let type of types) {
+                                elem.style[type[0]] = type[1]; 
+                            }
+                        }
+                    }
     
-                    course.children[0].style.fontWeight = 'bold';
-                    average.children[0].style.fontWeight = 'bold';
-                    grade.children[0].style.fontWeight = 'bold';
-                    course.children[0].style.color = 'black';
-                    average.children[0].style.color = 'black';
-                    grade.children[0].style.color = 'black';
+                    style([course.children[0], average.children[0], grade.children[0]], [["fontWeight", "bold"], ["color", "black"]]);
             
                     if(gradeVal == 'A+' || gradeVal == 'A'){
-                        course.style.backgroundColor = '#9bff94';
-                        average.style.backgroundColor = '#9bff94';
-                        grade.style.backgroundColor = '#9bff94';
+                        style([course, average, grade], [["backgroundColor", "#9bff94"]]);
                     } else if(gradeVal == 'A-'){
-                        course.style.backgroundColor = 'yellow';
-                        average.style.backgroundColor = 'yellow';
-                        grade.style.backgroundColor = 'yellow';
+                        style([course, average, grade], [["backgroundColor", "yellow"]]);
                     } else if(gradeVal == '' || gradeVal == 'P') {
-                        course.style.backgroundColor = '#f1f1f1';
-                        average.style.backgroundColor = '#f1f1f1';
-                        grade.style.backgroundColor = '#f1f1f1';
+                        style([course, average, grade], [["backgroundColor", "#f1f1f1"]]);
                     } else {
-                        course.style.backgroundColor = '#fc5d44';
-                        average.style.backgroundColor = '#fc5d44';
-                        grade.style.backgroundColor = '#fc5d44';
-    
-                        course.children[0].style.color = 'white';
-                        average.children[0].style.color = 'white';
-                        grade.children[0].style.color = 'white';
+                        style([course, average, grade], [["backgroundColor", "#fc5d44"], ["color", "white"]]);
                     }
                 }
             }
