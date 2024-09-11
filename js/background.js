@@ -85,4 +85,32 @@ function applyModifications() {
             }
         }
     });
+    
+    function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16)
+        } : null;
+    }      
+
+    chrome.storage.sync.get(['color'], function (result) {
+        let res = result.color;
+        if (result.color == undefined){
+            chrome.storage.sync.set({"color": "#499bd1"})
+            res = "#499bd1";
+        }
+        
+        let rgb = hexToRgb(res);
+        let oldColor = window.getComputedStyle(document.getElementsByClassName("navbar-inner")[0]).backgroundColor;
+
+        const elems = [...document.querySelectorAll('*')].filter(el => {
+            return window.getComputedStyle(el).backgroundColor === oldColor;
+        });
+        
+        for (let elem of elems) {
+            elem.style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+        }
+    });
 }

@@ -204,6 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    let color = document.getElementById("color");
     document.getElementById("changelog").addEventListener("click", redirectToChangelog);
     weighted.addEventListener("change", toggleWeighted)
     btns.addEventListener('click', btnsClicked)
@@ -215,6 +216,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('save').addEventListener("click", function(){
         chrome.storage.sync.set({"pai": pai.checked})
         chrome.storage.sync.set({"pcc": pcc.checked})
+        chrome.storage.sync.set({"color": color.value})
         chrome.tabs.reload()
+    });
+
+    chrome.storage.sync.get(['color'], function (result) {
+        if(result.color == undefined){
+            color.value = "rgb(73, 155, 209)";
+        } else {
+            color.value = result.color;
+        }
     });
 });
