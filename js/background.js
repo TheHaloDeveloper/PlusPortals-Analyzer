@@ -43,7 +43,7 @@ function applyModifications() {
                     average.children[0].style.color = 'black';
                     grade.children[0].style.color = 'black';
             
-                    if(gradeVal == 'A+' || gradeVal == 'A' || gradeVal == 'P'){
+                    if(gradeVal == 'A+' || gradeVal == 'A'){
                         course.style.backgroundColor = '#9bff94';
                         average.style.backgroundColor = '#9bff94';
                         grade.style.backgroundColor = '#9bff94';
@@ -51,7 +51,7 @@ function applyModifications() {
                         course.style.backgroundColor = 'yellow';
                         average.style.backgroundColor = 'yellow';
                         grade.style.backgroundColor = 'yellow';
-                    } else if(gradeVal == '') {
+                    } else if(gradeVal == '' || gradeVal == 'P') {
                         course.style.backgroundColor = '#f1f1f1';
                         average.style.backgroundColor = '#f1f1f1';
                         grade.style.backgroundColor = '#f1f1f1';

@@ -46,18 +46,16 @@ document.addEventListener('DOMContentLoaded', function() {
         // Average
         for(let i = 0; i < tablebody.children.length; i++){
             if(tablebody.children[i].children.length == 3){
-                if(tablebody.children[i].children[2].innerHTML != ''){
-                    for(let x = 0; x < advanced_titles.length; x++) {
-                        if(tablebody.children[i].children[0].innerHTML.includes(advanced_titles[x])){
-                            advanced = true;
-                        }
+                for(let x = 0; x < advanced_titles.length; x++) {
+                    if(tablebody.children[i].children[0].innerHTML.includes(advanced_titles[x])){
+                        advanced = true;
                     }
-                    
-                    if(advanced && isWeighted){
-                        grades.push(a_gpa[tablebody.children[i].children[2].innerHTML])
-                    } else {
-                        grades.push(gpa[tablebody.children[i].children[2].innerHTML])
-                    }
+                }
+                
+                if(advanced && isWeighted){
+                    grades.push(a_gpa[tablebody.children[i].children[2].innerHTML])
+                } else {
+                    grades.push(gpa[tablebody.children[i].children[2].innerHTML])
                 }
 
                 advanced = false;
@@ -65,12 +63,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         let final_gpa = 0;
+        let classes = 0;
 
         for(let i = 0; i < grades.length; i++){
-            final_gpa += grades[i];
+            if (grades[i]) {
+                final_gpa += grades[i];
+                classes += 1;
+            }
         }
 
-        return Math.round((final_gpa / grades.length) * 100) / 100;
+        return Math.round((final_gpa / classes) * 100) / 100;
     }
 
     function main() {
@@ -113,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             tablebody.innerHTML += `<tr><td class='green'>${course}</td><td class='green'>${average}</td><td class='green'>${grade}</td></tr>`;
                                         } else if (grade == 'A-') {
                                             tablebody.innerHTML += `<tr><td class='yellow'>${course}</td><td class='yellow'>${average}</td><td class='yellow'>${grade}</td></tr>`;
-                                        } else if (grade == '') {
+                                        } else if (grade == '' || grade == 'P') {
                                             tablebody.innerHTML += `<tr><td class='grey'>${course}</td><td class='grey'>${average}</td><td class='grey'>${grade}</td></tr>`;
                                         } else {
                                             tablebody.innerHTML += `<tr><td class='red'>${course}</td><td class='red'>${average}</td><td class='red'>${grade}</td></tr>`;
