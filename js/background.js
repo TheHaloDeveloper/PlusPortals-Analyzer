@@ -43,7 +43,7 @@ function applyModifications() {
                     average.children[0].style.color = 'black';
                     grade.children[0].style.color = 'black';
             
-                    if(gradeVal == 'A+' || gradeVal == 'A'){
+                    if(gradeVal == 'A+' || gradeVal == 'A' || gradeVal == 'P'){
                         course.style.backgroundColor = '#9bff94';
                         average.style.backgroundColor = '#9bff94';
                         grade.style.backgroundColor = '#9bff94';
