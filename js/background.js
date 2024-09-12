@@ -8,6 +8,34 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 });
 
 function applyModifications() {
+    function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }      
+
+    chrome.storage.sync.get(['color'], function (result) {
+        let res = result.color;
+        if (result.color == undefined) {
+            chrome.storage.sync.set({"color": "#499bd1"})
+            res = "#499bd1";
+        }
+        
+        let rgb = hexToRgb(res);
+        let style = document.createElement('style');
+        
+        style.textContent = `
+            .continhd, .navbar-inner, .re-blue-strip {
+                background-color: rgb(${rgb.r}, ${rgb.g}, ${rgb.b}) !important;
+            }
+        `;
+
+        document.head.appendChild(style);
+    });
+    
     chrome.storage.sync.get(['pcc'], function (result) {
         if (result.pcc == undefined) {
             chrome.storage.sync.set({"pcc": true});
@@ -78,32 +106,4 @@ function applyModifications() {
             }
         });
     }
-    
-    function hexToRgb(hex) {
-        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result ? {
-            r: parseInt(result[1], 16),
-            g: parseInt(result[2], 16),
-            b: parseInt(result[3], 16)
-        } : null;
-    }      
-
-    chrome.storage.sync.get(['color'], function (result) {
-        let res = result.color;
-        if (result.color == undefined) {
-            chrome.storage.sync.set({"color": "#499bd1"})
-            res = "#499bd1";
-        }
-        
-        let rgb = hexToRgb(res);
-        let style = document.createElement('style');
-        
-        style.textContent = `
-            .continhd, .navbar-inner, .re-blue-strip {
-                background-color: rgb(${rgb.r}, ${rgb.g}, ${rgb.b}) !important;
-            }
-        `;
-
-        document.head.appendChild(style);
-    });
 }
