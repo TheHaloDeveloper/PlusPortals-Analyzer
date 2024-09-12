@@ -61,20 +61,23 @@ function applyModifications() {
         checkFlag();
     }
     
-    let name_container = document.getElementsByClassName('re-blue-strip')[0].getElementsByTagName('label')[0];
+    let name_container = document.getElementsByClassName('re-blue-strip')[0];
+    if (name_container) {
+        name_container = name_container.getElementsByTagName('label')[0];
+        
+        let name = name_container.innerHTML.split('<')[0];
+        name_container.innerHTML = `${name} `;
+        
+        chrome.storage.sync.get(['pai'], function (result) {
+            if (result.pai == undefined) {
+                chrome.storage.sync.set({"pai": true});
+            }
 
-    let name = name_container.innerHTML.split('<')[0];
-    name_container.innerHTML = `${name} `;
-    
-    chrome.storage.sync.get(['pai'], function (result) {
-        if (result.pai == undefined) {
-            chrome.storage.sync.set({"pai": true});
-        }
-
-        if (result.pai != false) {
-            name_container.innerHTML += '<img src="https://i.ibb.co/fFKTm9T/icon.png" width="20px" style="margin-top: -5px; border-radius: 5px;">';
-        }
-    });
+            if (result.pai != false) {
+                name_container.innerHTML += '<img src="https://i.ibb.co/fFKTm9T/icon.png" width="20px" style="margin-top: -5px; border-radius: 5px;">';
+            }
+        });
+    }
     
     function hexToRgb(hex) {
         var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);

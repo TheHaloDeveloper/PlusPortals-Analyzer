@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let advanced = false;
 
         // Average
-        for (let row of tablebody.children.length) {
+        for (let row of tablebody.children) {
             if (row.children.length == 3) {
                 for (let x = 0; x < advanced_titles.length; x++) {
                     if (row.children[0].innerHTML.includes(advanced_titles[x])) {
