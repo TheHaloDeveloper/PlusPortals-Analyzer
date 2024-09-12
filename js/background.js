@@ -93,14 +93,14 @@ function applyModifications() {
         }
         
         let rgb = hexToRgb(res);
-        let oldColor = window.getComputedStyle(document.getElementsByClassName("navbar-inner")[0]).backgroundColor;
-
-        const elems = [...document.querySelectorAll('*')].filter(el => {
-            return window.getComputedStyle(el).backgroundColor === oldColor;
-        });
+        let style = document.createElement('style');
         
-        for (let elem of elems) {
-            elem.style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
-        }
+        style.textContent = `
+            .continhd, .navbar-inner, .re-blue-strip {
+                background-color: rgb(${rgb.r}, ${rgb.g}, ${rgb.b}) !important;
+            }
+        `;
+
+        document.head.appendChild(style);
     });
 }

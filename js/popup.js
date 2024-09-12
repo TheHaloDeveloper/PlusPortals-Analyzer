@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'F': 0.0
     };
 
-    let advanced_titles = [' Hon', 'AP ', 'IB ']
+    let advanced_titles = [' Hon', 'AP ', 'IB '];
 
     let urls = ['https://www.plusportals.com', 'https://plusportals.com']
     let tablebody = document.getElementById('table-body');
@@ -39,23 +39,23 @@ document.addEventListener('DOMContentLoaded', function() {
     let btns = document.getElementById('btns-container');
     let errorContainer = document.getElementById('error-container');
 
-    function calculate_gpa(isWeighted){
+    function calculate_gpa(isWeighted) {
         let grades = [];
         let advanced = false;
 
         // Average
-        for(let i = 0; i < tablebody.children.length; i++){
-            if(tablebody.children[i].children.length == 3){
-                for(let x = 0; x < advanced_titles.length; x++) {
-                    if(tablebody.children[i].children[0].innerHTML.includes(advanced_titles[x])){
+        for (let row of tablebody.children.length) {
+            if (row.children.length == 3) {
+                for (let x = 0; x < advanced_titles.length; x++) {
+                    if (row.children[0].innerHTML.includes(advanced_titles[x])) {
                         advanced = true;
                     }
                 }
                 
-                if(advanced && isWeighted){
-                    grades.push(a_gpa[tablebody.children[i].children[2].innerHTML])
+                if (advanced && isWeighted) {
+                    grades.push(a_gpa[row.children[2].innerHTML])
                 } else {
-                    grades.push(gpa[tablebody.children[i].children[2].innerHTML])
+                    grades.push(gpa[row.children[2].innerHTML])
                 }
 
                 advanced = false;
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let final_gpa = 0;
         let classes = 0;
 
-        for(let i = 0; i < grades.length; i++){
+        for (let i = 0; i < grades.length; i++) {
             if (grades[i]) {
                 final_gpa += grades[i];
                 classes += 1;
@@ -78,12 +78,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function main() {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             let tab = tabs[0];
-            let url = tab.url;
+            let currUrl = tab.url;
             let id = tab.id;
             let urlFound = false;
     
-            for (let i = 0; i < urls.length; i++) {
-                if (url.includes(urls[i])) {
+            for (let url of urls) {
+                if (currUrl.includes(url) && !urlFound) {
                     urlFound = true;
                     errorContainer.style.display = 'none';
     
@@ -102,11 +102,9 @@ document.addEventListener('DOMContentLoaded', function() {
                                 } else {
                                     let table = doc.getElementById('GridProgress').children[1].children[0];
     
-                                    document.getElementById('table-head').innerHTML = "<tr><th>Subject</th><th>Average</th><th>Grade</th></tr>";
-    
                                     // Classes
-                                    for (let i = 0; i < table.children[1].children.length; i++) {
-                                        let elem = table.children[1].children[i].children;
+                                    for (let row of table.children[1].children) {
+                                        let elem = row.children;
                                         let course = elem[0].children[0].innerHTML.split('(')[0];
                                         let average = elem[1].children[0].innerHTML;
                                         let grade = elem[2].children[0].innerHTML.replace(/\s/g, '');
@@ -123,16 +121,14 @@ document.addEventListener('DOMContentLoaded', function() {
                                     }
     
                                     chrome.storage.sync.get(['isWeighted'], function (result) {
-                                        let final_gpa;
-                                        if(result.isWeighted == undefined){
-                                            chrome.storage.sync.set({"isWeighted": weighted.checked})
-                                            final_gpa = calculate_gpa(true);
+                                        if (result.isWeighted == undefined) {
+                                            chrome.storage.sync.set({"isWeighted": weighted.checked});
                                             weighted.checked = true;
                                         } else {
-                                            final_gpa = calculate_gpa(result.isWeighted);
                                             weighted.checked = result.isWeighted;
                                         }
-                                        
+
+                                        let final_gpa = calculate_gpa(result.isWeighted !== undefined ? result.isWeighted : true);
                                         tablebody.innerHTML += `<tr><td class='final' colspan="2"><b>Final GPA:<b></td><td class='final' id='final_gpa'><b>${final_gpa}<b></td></tr>`;
                                     });
                                 }
@@ -155,12 +151,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function btnsClicked(event) {
-        if(event.target.id == 'ungraded-classes'){
-            if(btns.innerHTML.includes('<i id="ungraded-classes" class="fa-solid fa-eye"></i>')){
+        if (event.target.id == 'ungraded-classes') {
+            if (btns.innerHTML.includes('<i id="ungraded-classes" class="fa-solid fa-eye"></i>')) {
                 btns.innerHTML = btns.innerHTML.replace('<i id="ungraded-classes" class="fa-solid fa-eye"></i>', '<i id="ungraded-classes" class="fa-solid fa-eye-slash"></i>')
 
-                for(let i = tablebody.children.length - 1; i >= 0; i--){
-                    if(tablebody.children[i].children[1].innerHTML == ''){
+                for (let i = tablebody.children.length - 1; i >= 0; i--) {
+                    if (tablebody.children[i].children[1].innerHTML == '') {
                         document.getElementsByClassName('GeneratedTable')[0].deleteRow(i + 1)
                     }
                 }
@@ -170,26 +166,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 main();
             }
-        } else if(event.target.id == 'settings') {
+        } else if (event.target.id == 'settings') {
             document.getElementById("settings-menu").style.display = "block";
         }
     }
 
-    function redirectToChangelog(){
+    function redirectToChangelog() {
         chrome.tabs.create({ url: 'changelog.html' });
     }
 
     function toggleWeighted() {
-        chrome.storage.sync.set({"isWeighted": weighted.checked})
+        chrome.storage.sync.set({"isWeighted": weighted.checked});
         let gpa = calculate_gpa(weighted.checked);
-        document.getElementById('final_gpa').innerHTML = `<b>${gpa}</b>`
+        document.getElementById('final_gpa').innerHTML = `<b>${gpa}</b>`;
     }
 
     let pcc = document.getElementById("pcc-checkbox");
     let pai = document.getElementById("pai-checkbox");
+    let color = document.getElementById("color");
 
     chrome.storage.sync.get(['pcc'], function (result) {
-        if(result.pcc == undefined){
+        if (result.pcc == undefined) {
             pcc.checked = true;
         } else {
             pcc.checked = result.pcc;
@@ -197,31 +194,30 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     chrome.storage.sync.get(['pai'], function (result) {
-        if(result.pai == undefined){
+        if (result.pai == undefined) {
             pai.checked = true;
         } else {
             pai.checked = result.pai;
         }
     });
     
-    let color = document.getElementById("color");
     document.getElementById("changelog").addEventListener("click", redirectToChangelog);
-    weighted.addEventListener("change", toggleWeighted)
-    btns.addEventListener('click', btnsClicked)
+    weighted.addEventListener("change", toggleWeighted);
+    btns.addEventListener('click', btnsClicked);
 
-    document.getElementById('close').addEventListener("click", function(){
+    document.getElementById('close').addEventListener("click", function() {
         document.getElementById('settings-menu').style.display = "none";
     });
     
-    document.getElementById('save').addEventListener("click", function(){
-        chrome.storage.sync.set({"pai": pai.checked})
-        chrome.storage.sync.set({"pcc": pcc.checked})
-        chrome.storage.sync.set({"color": color.value})
-        chrome.tabs.reload()
+    document.getElementById('save').addEventListener("click", function() {
+        chrome.storage.sync.set({"pai": pai.checked});
+        chrome.storage.sync.set({"pcc": pcc.checked});
+        chrome.storage.sync.set({"color": color.value});
+        chrome.tabs.reload();
     });
 
     chrome.storage.sync.get(['color'], function (result) {
-        if(result.color == undefined){
+        if (result.color == undefined) {
             color.value = "rgb(73, 155, 209)";
         } else {
             color.value = result.color;
