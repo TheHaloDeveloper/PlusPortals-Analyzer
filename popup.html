@@ -12,15 +12,26 @@
     </head>
     <body>
         <div id="settings-menu">
-            <h1 class="rainbow_text_animated">Settings</h1>
-            <i id="close" class="fa-solid fa-circle-xmark"></i>
-
-            <span>PlusPortals color coding</span> <input id="pcc-checkbox" class="settings-checkbox" type="checkbox" class="toggle" checked>
-            <br>
-            <span>PlusPortals Analyzer icon</span> <input id="pai-checkbox" class="settings-checkbox" type="checkbox" class="toggle" checked>
-            <br>
-            <input type="color" id="color" name="color"/>
-
+            <div id="header">
+                <h1 class="rainbow_text_animated">Settings</h1>
+                <i id="close" class="fa-solid fa-circle-xmark"></i>
+            </div>
+        
+            <div class="settings-item">
+                <span>PlusPortals Color Coding</span>
+                <input id="pcc-checkbox" class="settings-checkbox" type="checkbox" checked>
+            </div>
+        
+            <div class="settings-item">
+                <span>PlusPortals Analyzer Icon</span>
+                <input id="pai-checkbox" class="settings-checkbox" type="checkbox" checked>
+            </div>
+        
+            <div class="settings-item">
+                <span>Choose Color</span>
+                <input type="color" id="color" name="color"/>
+            </div>
+        
             <div id="save">Save</div>
         </div>
 
