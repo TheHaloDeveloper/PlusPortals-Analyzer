@@ -39,6 +39,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let btns = document.getElementById('btns-container');
     let errorContainer = document.getElementById('error-container');
 
+    function returnGPA(final_gpa_sum, classes) {
+        let gpa = Math.round((final_gpa_sum / classes) * 100) / 100;
+        return gpa % 1 === 0 ? gpa.toFixed(1) : gpa.toFixed(2);
+    }
+
     function calculate_gpa(isWeighted) {
         let grades = [];
         let advanced = false;
@@ -72,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        return (Math.round((final_gpa / classes) * 100) / 100).toFixed(1);
+        return returnGPA(final_gpa, classes);
     }
 
     function main() {
