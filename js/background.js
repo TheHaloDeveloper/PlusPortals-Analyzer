@@ -37,11 +37,10 @@ function applyModifications() {
     });
     
     chrome.storage.sync.get(['pcc'], function (result) {
-        if (result.pcc == undefined) {
+        if (result.pcc == undefined || result.pcc == true) {
             chrome.storage.sync.set({"pcc": true});
+            colorCode();
         }
-
-        colorCode();
     });
 
     function colorCode() {
